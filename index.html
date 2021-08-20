@@ -1,0 +1,88 @@
+<<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js" ></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+    <script type="text/javascript">
+      AFRAME.registerComponent('box', {
+        schema: {
+          width: {type: 'number', deafult: 1},
+          height:{type: 'number', default: 1},
+          depth:{type: 'number', default: 1},
+          color:{type: 'color', default: #AAA}
+        }
+
+        init: function() {
+          var data = this.data;
+          var el; = this.el;
+
+          //create geometry
+          this.geometry = THREE.BoxBufferGeometry(data.width, data.height, data.depth);
+
+          //create material
+          this.material = THREE.MeshStandardMaterial({color: data.color});
+
+          //create mesh
+          this.mesh = THREE.Mesh(this.geometry, this.material);
+
+          el.setObject('mesh', this.mesh);
+        }
+
+        update: function (oldData){
+          var data = this.data;
+          var el = this.el;
+
+
+        }
+
+      });
+    </script>
+  </head>
+
+  <style>
+    .arjs-loader {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .arjs-loader div {
+      text-align: center;
+      font-size: 1.25em;
+      color: white;
+    }
+  </style>
+
+  <body style="margin : 0px; overflow: hidden;">
+    <!-- minimal loader shown until image descriptors are loaded. Loading may take a while according to the device computational power -->
+  <div class="arjs-loader">
+    <div>Loading, please wait...</div>
+  </div>
+
+    <a-scene vr-mode-ui="enabled: false"
+             renderer="logarithmicDepthBuffer: true"
+             arjs="trackingMethod: best; sourceType: webcam;debugUIEnabled: false">
+      <a-nft
+      type="nft"
+      url="TargetImage"
+      smooth="true"
+      smoothCount="10"
+      smoothTolerance=".01"
+      smoothThreshold="5">
+        <a-box src=".\3S37lNm.jpg" position="-1 0.5 -3" rotation="0 45 0" color="#fff"></a-box>
+        <a-entity id="box2" geometry="primitive:box; width:1; height:1" position="0 3 -3"
+                  material="shader:standard; color:rgb(0, 123, 176)"></a-entity>
+        <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
+        <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+      </a-nft>
+      <a-entity camera></a-entity>
+    </a-scene>
+  </body>
+</html>>
